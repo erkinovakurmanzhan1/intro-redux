@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { authActionTypes } from "../store/auth/authReducer";
+import { authActions } from "../store/auth/authSlice";
 import classes from "./Auth.module.css";
 
 const Auth = () => {
@@ -12,21 +12,20 @@ const Auth = () => {
 
   const inputChangeHandler = (name) => {
     return (event) => {
-    setFormState((prevState) => ({ ...prevState, [name]: event.target.value }));
+      setFormState((prevState) => ({
+        ...prevState,
+        [name]: event.target.value,
+      }));
     };
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log('click');
     if (
       formState.email === "test@gmail.com" &&
       formState.password === "123123"
     ) {
-      dispatch({
-        type: authActionTypes.LOG_IN,
-        payload: formState.email,
-      });
+      dispatch(authActions.login(formState.email));
     }
   };
   return (
